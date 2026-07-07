@@ -1,0 +1,14 @@
+{
+  "_comment": "Example shape only. Run: python scan_oura.py --read-values -o services.json",
+  "devices": [
+    {
+      "device": {
+        "name": "Oura Ring 4",
+        "address": "<corebluetooth-uuid>",
+        "rssi": -70
+      },
+      "connected": true,
+      "services": []
+    }
+  ]
+}

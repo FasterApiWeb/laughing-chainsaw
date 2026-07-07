@@ -31,37 +31,61 @@ htmlcov/
 .AppleDouble
 .LSOverride
 
-# --- IDE ---
+# --- IDE / AI tooling ---
 .idea/
 .vscode/
+.claude/
 *.swp
 *.swo
 *~
 
+# --- Xcode / iOS ---
+ios/LibreRing/LibreRing.xcodeproj/xcuserdata/
+ios/LibreRing/LibreRing.xcodeproj/project.xcworkspace/xcuserdata/
+DerivedData/
+*.xcuserstate
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# --- Android ---
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+*.apk
+*.aab
+
 # --- Auth keys & pairing material (NEVER commit) ---
 key.hex
+**/key.hex
+!key.hex.example
 *.key
 auth_key.*
 pairing.json
 
 # --- Personal / device-specific BLE data ---
-# GATT dumps: CoreBluetooth UUIDs, ring name, manufacturer payloads
 services.json
 services-*.json
+**/services.json
+!**/services.example.json
 oura_gatt_dump.json
 *.timeline.json
 
-# BLE session logs (hex payloads, nonces, battery readings)
+# BLE session logs (hex payloads, nonces, auth keys, device UUIDs)
 *.jsonl
+**/captures/
 captures/
+
+# Pairing / control session output (may contain key_hex + device address)
+**/pair.json
+**/factory_reset.json
+correlation.json
 
 # PacketLogger / Wireshark captures (raw HCI traffic)
 *.pklg
 *.pcap
 *.pcapng
-
-# mitmproxy / correlation output (tokens, health metrics)
-correlation.json
 
 # Frida / RE scratch output
 frida-*.log
@@ -69,3 +93,14 @@ dump/
 
 # Local Wireshark plugin symlink (install via ln -sf, do not commit)
 # ~/.local/lib/wireshark/plugins/oura.lua
+
+# --- Desktop app (Next.js) ---
+desktop/node_modules/
+desktop/.next/
+desktop/out/
+desktop/.env
+desktop/.env.local
+desktop/.vercel
+
+# --- Node (root-level) ---
+node_modules/

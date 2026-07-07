@@ -1,0 +1,454 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		003C0BBF8DFB270A96BDDB82 /* LocalStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF943EB3FC82FD09C8946444 /* LocalStore.swift */; };
+		0F5F904795F60853712E7A0D /* LibreRingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422EE068EABA5DBE4AD748DC /* LibreRingApp.swift */; };
+		2868132E47DF9505B303551E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F09C6649612BF512E0BAEAC /* Assets.xcassets */; };
+		403ADF4D5B998880E6DFDD2B /* OuraProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AE280FCDE2C45541E382E0 /* OuraProtocol.swift */; };
+		42ADF76D9B4DB0F5CEF291F2 /* BreathingRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F02315A4BE301349580AEC2 /* BreathingRate.swift */; };
+		45BFC79D314C0492FB1F66AB /* RingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161BFBB4ECEAEDA04494BA0 /* RingView.swift */; };
+		4B7273505CEC37098A37B5C9 /* TrendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047A1050ABEABC07EF3BB89B /* TrendsView.swift */; };
+		61BA60C1AEE01A520FE1E711 /* SleepScoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79D08E8E213A3768BDB7AA4 /* SleepScoring.swift */; };
+		634F9F25B710088F9A115056 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FF87DF933F278C8B1CCFDB /* ContentView.swift */; };
+		65BB5FC5CCEB80F5D537240D /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9562A24610C252953015F /* ScannerView.swift */; };
+		79B55DC7F8A50AEDC1847A63 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235C24089788B9856316FBF2 /* SettingsView.swift */; };
+		7C7658112101DD4540209CBE /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A554A11A6DD477850C087B6 /* DashboardView.swift */; };
+		7EFD57DA3A0B6292E65EA98A /* SleepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9401D00F810F7F630B2575 /* SleepView.swift */; };
+		859A0B76EB4ADA80816CA026 /* HRVAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A4CDFB4CF0D1706142F6C6 /* HRVAnalysis.swift */; };
+		8CF5D97639913E749FF07F4A /* ActivityScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35D3C9F92A32E72E2006D11 /* ActivityScore.swift */; };
+		9765779EBFBDE92DDB15FF42 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A1980E7EC9C2F989BE2414 /* HealthKitManager.swift */; };
+		A216ECBA630A28CE62C937F7 /* ReadinessScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61001B37DCE17820A2CC73A /* ReadinessScore.swift */; };
+		B12344CF95370AB9264C2E74 /* SpO2Calibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE66F6CCA3B023A0815643B8 /* SpO2Calibration.swift */; };
+		BD5A49F37FF052F71C1AE41D /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF21BB6C8A448FC02A8503C5 /* BLEManager.swift */; };
+		D08CC77234DEDE8E0B1DC773 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C17F5F37F2121FE9D0A7D3 /* KeychainStore.swift */; };
+		F124D73E2F6096ED4B59976D /* PersonalBaseline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BF3C369BC8EB18130DE321 /* PersonalBaseline.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		01C17F5F37F2121FE9D0A7D3 /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
+		047A1050ABEABC07EF3BB89B /* TrendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsView.swift; sourceTree = "<group>"; };
+		235C24089788B9856316FBF2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		2CE2C2BBC66422D8572B51ED /* LibreRing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LibreRing.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		33A1980E7EC9C2F989BE2414 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
+		422EE068EABA5DBE4AD748DC /* LibreRingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibreRingApp.swift; sourceTree = "<group>"; };
+		6A554A11A6DD477850C087B6 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		6F09C6649612BF512E0BAEAC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		76B1BA3F70DE5D29DD1FAF29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8161BFBB4ECEAEDA04494BA0 /* RingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingView.swift; sourceTree = "<group>"; };
+		901270D048C8AD957E11B2BB /* LibreRing.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LibreRing.entitlements; sourceTree = "<group>"; };
+		94BF3C369BC8EB18130DE321 /* PersonalBaseline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalBaseline.swift; sourceTree = "<group>"; };
+		9F02315A4BE301349580AEC2 /* BreathingRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingRate.swift; sourceTree = "<group>"; };
+		AB9401D00F810F7F630B2575 /* SleepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepView.swift; sourceTree = "<group>"; };
+		B2AE280FCDE2C45541E382E0 /* OuraProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OuraProtocol.swift; sourceTree = "<group>"; };
+		B35D3C9F92A32E72E2006D11 /* ActivityScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityScore.swift; sourceTree = "<group>"; };
+		B6A4CDFB4CF0D1706142F6C6 /* HRVAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HRVAnalysis.swift; sourceTree = "<group>"; };
+		B79D08E8E213A3768BDB7AA4 /* SleepScoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepScoring.swift; sourceTree = "<group>"; };
+		CE66F6CCA3B023A0815643B8 /* SpO2Calibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpO2Calibration.swift; sourceTree = "<group>"; };
+		DF21BB6C8A448FC02A8503C5 /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
+		DF943EB3FC82FD09C8946444 /* LocalStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStore.swift; sourceTree = "<group>"; };
+		E1FF87DF933F278C8B1CCFDB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E8E9562A24610C252953015F /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
+		F61001B37DCE17820A2CC73A /* ReadinessScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessScore.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		04D7D894ED82C5409FC7C9BF /* LibreRing */ = {
+			isa = PBXGroup;
+			children = (
+				6F09C6649612BF512E0BAEAC /* Assets.xcassets */,
+				76B1BA3F70DE5D29DD1FAF29 /* Info.plist */,
+				901270D048C8AD957E11B2BB /* LibreRing.entitlements */,
+				55E80077C4A6E0FE435B762C /* Analysis */,
+				2C895472337B91FC8C5D2329 /* App */,
+				060A231DCC978287806B54C0 /* BLE */,
+				CA29D0272FA2FC8AFA6DADA5 /* Health */,
+				56AD63D67FFC7C3CE0AE1C14 /* Models */,
+				80598AFBD2E775266DA9C386 /* Storage */,
+				96DE322F79A773A3BEEFB08C /* Views */,
+			);
+			path = LibreRing;
+			sourceTree = "<group>";
+		};
+		060A231DCC978287806B54C0 /* BLE */ = {
+			isa = PBXGroup;
+			children = (
+				DF21BB6C8A448FC02A8503C5 /* BLEManager.swift */,
+				01C17F5F37F2121FE9D0A7D3 /* KeychainStore.swift */,
+				B2AE280FCDE2C45541E382E0 /* OuraProtocol.swift */,
+			);
+			path = BLE;
+			sourceTree = "<group>";
+		};
+		0E6F12FA7D2681F2660BBFF0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2CE2C2BBC66422D8572B51ED /* LibreRing.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2C895472337B91FC8C5D2329 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				E1FF87DF933F278C8B1CCFDB /* ContentView.swift */,
+				422EE068EABA5DBE4AD748DC /* LibreRingApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		432293002FA21CBD103887C5 = {
+			isa = PBXGroup;
+			children = (
+				04D7D894ED82C5409FC7C9BF /* LibreRing */,
+				0E6F12FA7D2681F2660BBFF0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		45ED02AE0A97ECB269041F90 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		55E80077C4A6E0FE435B762C /* Analysis */ = {
+			isa = PBXGroup;
+			children = (
+				B35D3C9F92A32E72E2006D11 /* ActivityScore.swift */,
+				9F02315A4BE301349580AEC2 /* BreathingRate.swift */,
+				B6A4CDFB4CF0D1706142F6C6 /* HRVAnalysis.swift */,
+				94BF3C369BC8EB18130DE321 /* PersonalBaseline.swift */,
+				F61001B37DCE17820A2CC73A /* ReadinessScore.swift */,
+				B79D08E8E213A3768BDB7AA4 /* SleepScoring.swift */,
+				CE66F6CCA3B023A0815643B8 /* SpO2Calibration.swift */,
+			);
+			path = Analysis;
+			sourceTree = "<group>";
+		};
+		56AD63D67FFC7C3CE0AE1C14 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		80598AFBD2E775266DA9C386 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				DF943EB3FC82FD09C8946444 /* LocalStore.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		96DE322F79A773A3BEEFB08C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6A554A11A6DD477850C087B6 /* DashboardView.swift */,
+				8161BFBB4ECEAEDA04494BA0 /* RingView.swift */,
+				E8E9562A24610C252953015F /* ScannerView.swift */,
+				235C24089788B9856316FBF2 /* SettingsView.swift */,
+				AB9401D00F810F7F630B2575 /* SleepView.swift */,
+				047A1050ABEABC07EF3BB89B /* TrendsView.swift */,
+				45ED02AE0A97ECB269041F90 /* Components */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CA29D0272FA2FC8AFA6DADA5 /* Health */ = {
+			isa = PBXGroup;
+			children = (
+				33A1980E7EC9C2F989BE2414 /* HealthKitManager.swift */,
+			);
+			path = Health;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F6858094C0B74AE367FC4DDF /* LibreRing */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 58D340A68C7644FD59C9413C /* Build configuration list for PBXNativeTarget "LibreRing" */;
+			buildPhases = (
+				0AF15761922483BD118BC92E /* Sources */,
+				4E766B8D2090FDD985233CEA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LibreRing;
+			packageProductDependencies = (
+			);
+			productName = LibreRing;
+			productReference = 2CE2C2BBC66422D8572B51ED /* LibreRing.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2A7BFADC9C0DC6067D33C27A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = C7C974EA2EEA2042C40EDF1B /* Build configuration list for PBXProject "LibreRing" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 432293002FA21CBD103887C5;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 0E6F12FA7D2681F2660BBFF0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F6858094C0B74AE367FC4DDF /* LibreRing */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4E766B8D2090FDD985233CEA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2868132E47DF9505B303551E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0AF15761922483BD118BC92E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8CF5D97639913E749FF07F4A /* ActivityScore.swift in Sources */,
+				BD5A49F37FF052F71C1AE41D /* BLEManager.swift in Sources */,
+				42ADF76D9B4DB0F5CEF291F2 /* BreathingRate.swift in Sources */,
+				634F9F25B710088F9A115056 /* ContentView.swift in Sources */,
+				7C7658112101DD4540209CBE /* DashboardView.swift in Sources */,
+				859A0B76EB4ADA80816CA026 /* HRVAnalysis.swift in Sources */,
+				9765779EBFBDE92DDB15FF42 /* HealthKitManager.swift in Sources */,
+				D08CC77234DEDE8E0B1DC773 /* KeychainStore.swift in Sources */,
+				0F5F904795F60853712E7A0D /* LibreRingApp.swift in Sources */,
+				003C0BBF8DFB270A96BDDB82 /* LocalStore.swift in Sources */,
+				403ADF4D5B998880E6DFDD2B /* OuraProtocol.swift in Sources */,
+				F124D73E2F6096ED4B59976D /* PersonalBaseline.swift in Sources */,
+				A216ECBA630A28CE62C937F7 /* ReadinessScore.swift in Sources */,
+				45BFC79D314C0492FB1F66AB /* RingView.swift in Sources */,
+				65BB5FC5CCEB80F5D537240D /* ScannerView.swift in Sources */,
+				79B55DC7F8A50AEDC1847A63 /* SettingsView.swift in Sources */,
+				61BA60C1AEE01A520FE1E711 /* SleepScoring.swift in Sources */,
+				7EFD57DA3A0B6292E65EA98A /* SleepView.swift in Sources */,
+				B12344CF95370AB9264C2E74 /* SpO2Calibration.swift in Sources */,
+				4B7273505CEC37098A37B5C9 /* TrendsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		66CCC221537C4457D1D63EAE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.librering.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "LibreRing/BLE/OuraProtocol+CommonCrypto.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		B63FF1CED42ED4C03AA3FD10 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = LibreRing/LibreRing.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = LibreRing/Info.plist;
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.librering.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		EE2E59BEC8607C643627A4ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.librering.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "LibreRing/BLE/OuraProtocol+CommonCrypto.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		FD11379A29E9F1ED99902FAC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = LibreRing/LibreRing.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = JW9P2UTS9B;
+				INFOPLIST_FILE = LibreRing/Info.plist;
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.librering.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		58D340A68C7644FD59C9413C /* Build configuration list for PBXNativeTarget "LibreRing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FD11379A29E9F1ED99902FAC /* Debug */,
+				B63FF1CED42ED4C03AA3FD10 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C7C974EA2EEA2042C40EDF1B /* Build configuration list for PBXProject "LibreRing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66CCC221537C4457D1D63EAE /* Debug */,
+				EE2E59BEC8607C643627A4ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2A7BFADC9C0DC6067D33C27A /* Project object */;
+}
