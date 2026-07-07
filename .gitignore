@@ -1,0 +1,59 @@
+# --- Python ---
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+*.cover
+
+# --- Environment / secrets ---
+.env
+.env.*
+!.env.example
+
+# --- macOS ---
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# --- IDE ---
+.idea/
+*.swp
+*.swo
+*~
+
+# --- Personal / device-specific BLE data ---
+# GATT dumps contain CoreBluetooth UUIDs, ring name, manufacturer payloads
+services.json
+oura_gatt_dump.json
+*.timeline.json
+
+# PacketLogger / Wireshark captures (raw HCI traffic from your sessions)
+*.pklg
+*.pcap
+*.pcapng
+
+# mitmproxy Oura API captures (tokens, health data, account info)
+captures/
+
+# Frida / RE scratch output
+frida-*.log
+dump/
+
+# Local Wireshark plugin symlink target (install via ln -sf, do not commit)
+# ~/.local/lib/wireshark/plugins/oura.lua
