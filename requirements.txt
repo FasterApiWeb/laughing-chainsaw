@@ -1,0 +1,8 @@
+bleak>=3.0
+click>=8.0
+construct>=2.10
+cryptography>=42.0
+pydantic>=2.0
+rich>=13.0
+mitmproxy>=11.0
+pytest>=8.0

@@ -33,27 +33,39 @@ htmlcov/
 
 # --- IDE ---
 .idea/
+.vscode/
 *.swp
 *.swo
 *~
 
+# --- Auth keys & pairing material (NEVER commit) ---
+key.hex
+*.key
+auth_key.*
+pairing.json
+
 # --- Personal / device-specific BLE data ---
-# GATT dumps contain CoreBluetooth UUIDs, ring name, manufacturer payloads
+# GATT dumps: CoreBluetooth UUIDs, ring name, manufacturer payloads
 services.json
+services-*.json
 oura_gatt_dump.json
 *.timeline.json
 
-# PacketLogger / Wireshark captures (raw HCI traffic from your sessions)
+# BLE session logs (hex payloads, nonces, battery readings)
+*.jsonl
+captures/
+
+# PacketLogger / Wireshark captures (raw HCI traffic)
 *.pklg
 *.pcap
 *.pcapng
 
-# mitmproxy Oura API captures (tokens, health data, account info)
-captures/
+# mitmproxy / correlation output (tokens, health metrics)
+correlation.json
 
 # Frida / RE scratch output
 frida-*.log
 dump/
 
-# Local Wireshark plugin symlink target (install via ln -sf, do not commit)
+# Local Wireshark plugin symlink (install via ln -sf, do not commit)
 # ~/.local/lib/wireshark/plugins/oura.lua

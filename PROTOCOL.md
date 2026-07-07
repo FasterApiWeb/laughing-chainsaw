@@ -189,21 +189,40 @@ sequenceDiagram
 
 ## 5. Authentication flow
 
-> **Status: UNKNOWN** — fill in from PacketLogger + app RE.
+> **Status: CONFIRMED** — from [open_oura android-app-reversing](https://github.com/Th0rgal/open_oura/blob/main/docs/android-app-reversing.md) and [ringverse BLE](https://github.com/ringverse/protocol/blob/main/oura/BLE.md).
 
-Expected pattern (from open_oura / Gadgetbridge-style wearables):
+Oura uses **app-auth** (not standard BLE pairing) on characteristics `98ed0002` / `98ed0003`:
 
-1. App generates or loads a **pairing key** (stored on phone)
-2. App writes **auth challenge** to `98ed0002`
-3. Ring responds on `98ed0003` (notify or read)
-4. Subsequent commands encrypted or session-token based
-5. Additional GATT services may appear post-auth
+| Step | Write (`98ed0002`) | Response (`98ed0003`) |
+|------|-------------------|------------------------|
+| 1. SetAuthKey | `2410` + 16-byte key | tag `0x25`, status `0x00` = OK |
+| 2. GetAuthNonce | `2f012b` | `2f102c` + 15-byte nonce |
+| 3. Authenticate | `2f112d` + AES-ECB-PKCS5(nonce, key) | `2f022e00` = success |
+
+- **SetAuthKey** only works on a **factory-reset** ring.
+- **Authenticate** is required **every connection** if a key is installed.
+- Key is 16 bytes; Oura app generates via UUID → little-endian 128 bits.
+- AES-ECB/PKCS5 (ringverse notes ECB; open_oura uses same).
+
+### LibreRing tools
+
+| Tool | Purpose |
+|------|---------|
+| `pair_oura.py` | Factory-reset ring → install new `key.hex` |
+| `probe_oura.py --key-file key.hex` | Nonce + auth + battery probe |
+| [open_oura](https://github.com/Th0rgal/open_oura) `oura` CLI | Full sync, live HR, SQLite store |
+
+### If already paired to Oura iPhone app
+
+The app's `auth_key` is in its encrypted database — not extractable easily.
+Options: (a) factory-reset + `pair_oura.py`, or (b) use open_oura on Android
+with HCI snoop during onboarding to capture the key.
 
 ### Open questions
 
-- [ ] Is pairing "Just Works" or passkey?
-- [ ] Where is the key stored on iOS (Keychain)?
-- [ ] Does Ring 4 differ from Ring 3/5 auth?
+- [x] Auth uses AES-ECB + PKCS5 on 15-byte nonce
+- [ ] iOS Keychain / Realm path for `auth_key` extraction
+- [ ] Ring 4 vs 5 post-pair feature defaults
 
 ---
 
@@ -253,10 +272,14 @@ or static analysis may be needed.
 | Tool | Input | Output | What you learn |
 |------|-------|--------|----------------|
 | `scan_oura.py` | Live ring | `services.json` | GATT tree, UUIDs, handles |
-| PacketLogger | Live BLE | `.pklg` | Raw HCI/ATT bytes with timing |
+| `listen_oura.py` | Live ring | `captures/ble/notifications.jsonl` | Live notify hex streams |
+| `probe_oura.py` | Live ring + optional key | `captures/ble/probe.jsonl` | Auth nonce, firmware, battery |
+| `pair_oura.py` | Factory-reset ring | `key.hex` | Cloud-free pairing |
+| `read_battery.py` | Live ring + key | stdout | First authenticated data read |
 | `parse_pklg.py` | `.pklg` | `.timeline.json` | Ordered ATT ops |
 | `dissectors/oura.lua` | `.pklg` in Wireshark | Annotated packets | Visual protocol debug |
 | `capture_api.py` | iPhone proxy | `captures/api/*.jsonl` | Cloud JSON schemas |
+| `correlate.py` | API + BLE logs | `captures/correlation.json` | Timestamp correlation |
 
 ---
 
