@@ -21,6 +21,7 @@ from scan_oura import discover_oura_devices, lookup_uuid, print_discovered
 console = Console()
 
 NOTIFY_PROPERTIES = frozenset({"notify", "indicate"})
+DATA_CHAR = "98ed0003-a541-11e4-b6a0-0002a5d5c51b"
 
 
 def short_uuid_label(uuid: str) -> str:
@@ -38,9 +39,13 @@ async def listen(
     connect_timeout: float,
     duration: float | None,
     output: Path | None,
+    auth_key: bytes | None,
 ) -> None:
     events: list[dict[str, Any]] = []
     output_handle: Any = None
+    cmd_queue: asyncio.Queue[bytes] | None = (
+        asyncio.Queue() if auth_key else None
+    )
 
     if output:
         output.parent.mkdir(parents=True, exist_ok=True)
@@ -50,6 +55,8 @@ async def listen(
         label = short_uuid_label(char_uuid)
 
         def on_notify(_handle: int, data: bytearray) -> None:
+            if char_uuid == DATA_CHAR and cmd_queue is not None:
+                cmd_queue.put_nowait(bytes(data))
             entry = {
                 "timestamp": datetime.now(timezone.utc).isoformat(),
                 "handle": handle,
@@ -94,6 +101,22 @@ async def listen(
         for uuid, handle in notify_chars:
             await client.start_notify(uuid, make_handler(uuid, handle))
 
+        if auth_key and cmd_queue is not None:
+            from oura_ble import authenticate, transact
+            from oura_protocol import CMD_BATTERY, CMD_FIRMWARE, CMD_SET_NOTIFICATION
+
+            if await authenticate(client, cmd_queue, auth_key):
+                console.print("[bold green]Authenticated[/bold green] — enabling notifications…")
+                for name, req in (
+                    ("set_notification", CMD_SET_NOTIFICATION),
+                    ("firmware", CMD_FIRMWARE),
+                    ("battery", CMD_BATTERY),
+                ):
+                    await transact(client, cmd_queue, req)
+                    console.print(f"  sent {name}")
+            else:
+                console.print("[yellow]Auth failed — listening without commands.[/yellow]")
+
         console.print("[bold green]Listening[/bold green] — Ctrl+C to stop.")
         if duration:
             await asyncio.sleep(duration)
@@ -134,17 +157,35 @@ async def listen(
     show_default=True,
     help="Append JSONL log (pass /dev/null style omit with -o - to disable).",
 )
+@click.option(
+    "--key-file",
+    "-k",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Authenticate and send enable commands before listening.",
+)
 def main(
     timeout: float,
     connect_timeout: float,
     address: str | None,
     duration: float | None,
     output: Path,
+    key_file: Path | None,
 ) -> None:
     """Subscribe to Oura Ring GATT notifications and print hex payloads."""
     out_path = None if str(output) == "-" else output
 
     async def _run() -> None:
+        auth_key: bytes | None = None
+        if key_file:
+            if not key_file.exists():
+                console.print(f"[red]Missing {key_file}[/red]")
+                sys.exit(1)
+            auth_key = bytes.fromhex(key_file.read_text(encoding="utf-8").strip())
+            if len(auth_key) != 16:
+                console.print("[red]key must be 16 bytes (32 hex chars)[/red]")
+                sys.exit(1)
+
         console.print(f"[bold]Scanning for Oura devices ({timeout:.0f}s)...[/bold]")
         devices = await discover_oura_devices(timeout)
         print_discovered(devices)
@@ -168,6 +209,7 @@ def main(
                 connect_timeout=connect_timeout,
                 duration=duration,
                 output=out_path,
+                auth_key=auth_key,
             )
         except BleakError as exc:
             console.print(f"[red]BLE error: {exc}[/red]")
