@@ -61,7 +61,7 @@ jobs:
           mkdir -p combined/docs
           cp -r site/* combined/docs/
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: combined
 
