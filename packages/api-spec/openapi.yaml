@@ -1,0 +1,252 @@
+openapi: 3.1.0
+info:
+  title: LibreRing API
+  version: 1.0.0
+  description: |
+    LibreRing shared backend contract.
+
+    **Auth & structured data** — Supabase (Postgres + Auth + RLS).
+    Clients use the official Supabase SDK for signup, login, and table sync.
+
+    **Blob storage** — Cloudflare R2 via the Worker endpoints in this spec
+    (presigned upload/download for exports and Oura ZIP backups).
+
+    See docs/BACKEND.md for setup.
+
+servers:
+  - url: https://{project}.supabase.co
+    description: Supabase project (Auth + PostgREST)
+    variables:
+      project:
+        default: your-project-ref
+  - url: https://api.librering.dev
+    description: Cloudflare Worker (R2 presigned URLs)
+
+tags:
+  - name: auth
+    description: Supabase Auth (use @supabase/supabase-js / supabase-swift / supabase-kt)
+  - name: sync
+    description: Health data sync (Supabase PostgREST / RPC)
+  - name: storage
+    description: Blob storage via Cloudflare Worker + R2
+
+paths:
+  /auth/v1/signup:
+    post:
+      tags: [auth]
+      summary: Sign up (Supabase Auth)
+      description: Implemented by Supabase Auth API — not the Worker.
+      operationId: signUp
+      responses:
+        "200":
+          description: Session created
+
+  /rest/v1/rpc/push_sync_batch:
+    post:
+      tags: [sync]
+      summary: Push a batch of health records (Supabase RPC)
+      operationId: pushSyncBatch
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SyncPushRequest"
+      responses:
+        "200":
+          description: Batch accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SyncPushResponse"
+
+  /rest/v1/rpc/pull_sync_delta:
+    post:
+      tags: [sync]
+      summary: Pull records since cursor (Supabase RPC)
+      operationId: pullSyncDelta
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SyncPullRequest"
+      responses:
+        "200":
+          description: Delta payload
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SyncPullResponse"
+
+  /v1/storage/upload-url:
+    post:
+      tags: [storage]
+      summary: Get presigned R2 upload URL (Worker)
+      operationId: createUploadUrl
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StorageUploadRequest"
+      responses:
+        "200":
+          description: Presigned PUT URL
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StorageUploadResponse"
+
+  /v1/storage/download-url:
+    post:
+      tags: [storage]
+      summary: Get presigned R2 download URL (Worker)
+      operationId: createDownloadUrl
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StorageDownloadRequest"
+      responses:
+        "200":
+          description: Presigned GET URL
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StorageDownloadResponse"
+
+  /health:
+    get:
+      tags: [storage]
+      summary: Worker health check
+      operationId: healthCheck
+      responses:
+        "200":
+          description: OK
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    SyncPushRequest:
+      type: object
+      required: [device_id, cursor, batches]
+      properties:
+        device_id:
+          type: string
+          format: uuid
+        cursor:
+          type: string
+          description: Client-side sync cursor (opaque)
+        batches:
+          type: array
+          items:
+            $ref: "#/components/schemas/SyncBatch"
+
+    SyncBatch:
+      type: object
+      required: [table, records]
+      properties:
+        table:
+          type: string
+          enum:
+            - heart_rate
+            - spo2
+            - temperature
+            - sleep_phase
+            - steps
+            - daily_summary
+            - baselines
+        records:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+
+    SyncPushResponse:
+      type: object
+      properties:
+        new_cursor:
+          type: string
+        inserted:
+          type: integer
+        skipped:
+          type: integer
+
+    SyncPullRequest:
+      type: object
+      required: [device_id, since_cursor]
+      properties:
+        device_id:
+          type: string
+          format: uuid
+        since_cursor:
+          type: string
+        tables:
+          type: array
+          items:
+            type: string
+
+    SyncPullResponse:
+      type: object
+      properties:
+        cursor:
+          type: string
+        batches:
+          type: array
+          items:
+            $ref: "#/components/schemas/SyncBatch"
+
+    StorageUploadRequest:
+      type: object
+      required: [filename, content_type]
+      properties:
+        filename:
+          type: string
+          example: librering-export-2026-07-07.json
+        content_type:
+          type: string
+          example: application/json
+
+    StorageUploadResponse:
+      type: object
+      properties:
+        object_key:
+          type: string
+        upload_url:
+          type: string
+          format: uri
+        expires_at:
+          type: string
+          format: date-time
+
+    StorageDownloadRequest:
+      type: object
+      required: [object_key]
+      properties:
+        object_key:
+          type: string
+
+    StorageDownloadResponse:
+      type: object
+      properties:
+        download_url:
+          type: string
+          format: uri
+        expires_at:
+          type: string
+          format: date-time

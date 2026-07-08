@@ -1,0 +1,17 @@
+# Backend — secrets and local deploy state
+
+.env
+.env.*
+!.env.example
+
+# Cloudflare Worker local dev
+.wrangler/
+.dev.vars
+.dev.vars.*
+
+# Supabase CLI local state
+.supabase/
+
+# Never commit service role keys or JWT secrets
+*service_role*
+*SERVICE_ROLE*

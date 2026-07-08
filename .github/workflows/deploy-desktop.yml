@@ -1,9 +1,12 @@
-name: Deploy Desktop to GitHub Pages
+name: Deploy Web to GitHub Pages
 
 on:
   push:
     branches: [main]
-    paths: [desktop/**]
+    paths:
+      - "apps/web/**"
+      - "packages/sdk-ts/**"
+      - "pnpm-lock.yaml"
   workflow_dispatch:
 
 permissions:
@@ -18,24 +21,29 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: desktop
     steps:
       - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
 
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
-          cache-dependency-path: desktop/package-lock.json
+          cache: pnpm
 
-      - run: npm ci
-      - run: npm run build
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm build:sdk
+      - run: pnpm build:web
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: desktop/out
+          path: apps/web/out
 
   deploy:
     needs: build

@@ -21,10 +21,14 @@ htmlcov/
 .nox/
 *.cover
 
-# --- Environment / secrets ---
+# --- Environment / secrets (all paths) ---
 .env
 .env.*
 !.env.example
+!.env.*.example
+*.pem
+*.p12
+*.mobileprovision
 
 # --- macOS ---
 .DS_Store
@@ -35,24 +39,31 @@ htmlcov/
 .idea/
 .vscode/
 .claude/
+.cursor/
 *.swp
 *.swo
 *~
 
-# --- Xcode / iOS ---
-ios/LibreRing/LibreRing.xcodeproj/xcuserdata/
-ios/LibreRing/LibreRing.xcodeproj/project.xcworkspace/xcuserdata/
-DerivedData/
+# --- Legacy paths (pre-monorepo move) ---
+desktop/
+ios/
+
+# --- iOS / Xcode (all paths) ---
+**/xcuserdata/
 *.xcuserstate
+DerivedData/
 *.ipa
-*.dSYM.zip
 *.dSYM
+*.dSYM.zip
+apps/ios/**/Secrets.xcconfig.local
+*.xcconfig.local
 
 # --- Android ---
-android/.gradle/
-android/build/
-android/app/build/
-android/local.properties
+apps/android/.gradle/
+apps/android/build/
+apps/android/app/build/
+apps/android/local.properties
+apps/android/gradle.properties
 *.apk
 *.aab
 
@@ -63,6 +74,8 @@ key.hex
 *.key
 auth_key.*
 pairing.json
+**/pair.json
+**/factory_reset.json
 
 # --- Personal / device-specific BLE data ---
 services.json
@@ -76,10 +89,6 @@ oura_gatt_dump.json
 *.jsonl
 **/captures/
 captures/
-
-# Pairing / control session output (may contain key_hex + device address)
-**/pair.json
-**/factory_reset.json
 correlation.json
 
 # PacketLogger / Wireshark captures (raw HCI traffic)
@@ -91,16 +100,29 @@ correlation.json
 frida-*.log
 dump/
 
-# Local Wireshark plugin symlink (install via ln -sf, do not commit)
-# ~/.local/lib/wireshark/plugins/oura.lua
+# --- Web app (Next.js) ---
+apps/web/node_modules/
+apps/web/.next/
+apps/web/out/
+apps/web/.env
+apps/web/.env.local
+apps/web/.env.*.local
+apps/web/.vercel
+apps/web/package-lock.json
 
-# --- Desktop app (Next.js) ---
-desktop/node_modules/
-desktop/.next/
-desktop/out/
-desktop/.env
-desktop/.env.local
-desktop/.vercel
-
-# --- Node (root-level) ---
+# --- Monorepo ---
 node_modules/
+packages/sdk-ts/dist/
+backend/worker/.wrangler/
+backend/worker/.dev.vars
+backend/supabase/.env
+backend/**/.supabase/
+
+# --- Rust ---
+core/librering-core/target/
+
+# --- Cloud / infra secrets ---
+**/wrangler.toml.local
+**/*service_role*
+**/*SERVICE_ROLE*
+**/*JWT_SECRET*

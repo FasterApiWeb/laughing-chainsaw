@@ -1,0 +1,11 @@
+name = "librering-api"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+[vars]
+# Set in Cloudflare dashboard or wrangler secret:
+# SUPABASE_URL, SUPABASE_JWT_SECRET, R2 bucket binding
+
+[[r2_buckets]]
+binding = "EXPORTS"
+bucket_name = "librering-exports"

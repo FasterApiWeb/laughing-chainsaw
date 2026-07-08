@@ -1,0 +1,17 @@
+{
+  "name": "librering",
+  "private": true,
+  "scripts": {
+    "build:sdk": "pnpm --filter @librering/sdk build",
+    "build:web": "pnpm --filter @librering/web build",
+    "dev:web": "pnpm --filter @librering/web dev",
+    "dev:worker": "pnpm --filter @librering/worker dev",
+    "lint:web": "pnpm --filter @librering/web lint",
+    "typecheck": "pnpm -r typecheck",
+    "build:core": "cargo test --manifest-path core/librering-core/Cargo.toml"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@9.15.0"
+}

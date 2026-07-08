@@ -1,0 +1,4 @@
+# Supabase (optional — leave blank for local-only builds)
+SUPABASE_URL=https://your-project-ref.supabase.co
+SUPABASE_ANON_KEY=your-anon-key
+WORKER_URL=https://api.librering.dev

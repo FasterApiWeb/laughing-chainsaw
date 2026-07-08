@@ -1,0 +1,37 @@
+# Python RE toolkit — never commit personal captures or ring keys
+
+# Virtualenv
+.venv/
+venv/
+
+# Ring auth & pairing (NEVER commit)
+key.hex
+**/key.hex
+!key.hex.example
+*.key
+auth_key.*
+pairing.json
+
+# Device-specific GATT dumps
+services.json
+services-*.json
+!services.example.json
+oura_gatt_dump.json
+
+# Session logs (hex payloads, MAC addresses, nonces)
+*.jsonl
+captures/
+**/captures/
+**/pair.json
+**/factory_reset.json
+correlation.json
+
+# Packet captures
+*.pklg
+*.pcap
+*.pcapng
+
+# Scratch / Frida
+frida-*.log
+dump/
+*.timeline.json
