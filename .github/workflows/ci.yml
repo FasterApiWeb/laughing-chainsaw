@@ -1,0 +1,95 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  web:
+    name: Web (lint + build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build:sdk
+      - run: pnpm lint:web
+      - run: pnpm build:web
+
+  worker:
+    name: Worker (typecheck)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck:worker
+
+  rust:
+    name: Rust core (test)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - run: cargo test --manifest-path core/librering-core/Cargo.toml
+
+  docs:
+    name: Docs (MkDocs build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r docs/requirements.txt
+      - run: mkdocs build --strict
+
+  secrets-check:
+    name: No secrets in tree
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Block tracked key.hex
+        run: |
+          if git ls-files | grep -E '(^|/)key\.hex$'; then
+            echo "ERROR: key.hex must not be tracked"
+            exit 1
+          fi
+          echo "OK: no key.hex tracked"
+
+      - name: Block tracked .env files
+        run: |
+          if git ls-files | grep -E '\.env$|\.env\.local$'; then
+            echo "ERROR: .env files must not be tracked"
+            exit 1
+          fi
+          echo "OK: no .env tracked"

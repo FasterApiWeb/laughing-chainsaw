@@ -56,7 +56,7 @@ Requires physical iPhone (BLE).
 
 **Stack:** Kotlin, Jetpack Compose, Room (scaffold)
 
-See [apps/android/README.md](../apps/android/README.md).
+See [apps/android/README.md](https://github.com/FasterApiWeb/laughing-chainsaw/blob/main/apps/android/README.md).
 
 ## TypeScript SDK (`packages/sdk-ts`)
 

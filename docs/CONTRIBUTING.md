@@ -95,4 +95,13 @@ See root `README.md` — never commit ring auth keys, GATT dumps, or health JSON
 
 ## Questions
 
-Open a GitHub issue with the `question` label or check existing docs in `docs/`.
+Open a [GitHub Discussion](https://github.com/FasterApiWeb/laughing-chainsaw/discussions) or issue with the `question` label.
+
+## Documentation site
+
+Docs are built with MkDocs Material. After editing files in `docs/`:
+
+```bash
+pip install -r docs/requirements.txt
+mkdocs serve
+```

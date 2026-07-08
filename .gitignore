@@ -110,6 +110,9 @@ apps/web/.env.*.local
 apps/web/.vercel
 apps/web/package-lock.json
 
+# --- MkDocs ---
+site/
+
 # --- Monorepo ---
 node_modules/
 packages/sdk-ts/dist/

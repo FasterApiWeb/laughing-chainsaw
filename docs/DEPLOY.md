@@ -1,6 +1,9 @@
-# Deploy web app to GitHub Pages
+# Deploy to GitHub Pages
 
-Production URL: **https://fasterapiweb.github.io/laughing-chainsaw/**
+| Site | URL |
+|------|-----|
+| **Web dashboard** | https://fasterapiweb.github.io/laughing-chainsaw/ |
+| **Documentation (MkDocs)** | https://fasterapiweb.github.io/laughing-chainsaw/docs/ |
 
 ## One-time GitHub setup
 
@@ -26,9 +29,9 @@ Production URL: **https://fasterapiweb.github.io/laughing-chainsaw/**
 
 ## Deploy
 
-Push to `main` — workflow `.github/workflows/deploy-desktop.yml` runs when `apps/web/`, `packages/sdk-ts/`, or `pnpm-lock.yaml` change.
+Push to `main` — workflow `.github/workflows/deploy-pages.yml` builds the web app and MkDocs docs into one Pages artifact.
 
-Manual trigger: **Actions** → **Deploy Web to GitHub Pages** → **Run workflow**.
+Manual trigger: **Actions** → **Deploy Pages** → **Run workflow**.
 
 ## Verify
 

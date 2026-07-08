@@ -12,7 +12,9 @@
     "check:cloud": "node scripts/check-cloud-env.mjs",
     "wire:env": "node scripts/wire-env.mjs",
     "test:supabase": "node scripts/test-supabase.mjs",
-    "typecheck:worker": "pnpm --filter @librering/worker typecheck"
+    "typecheck:worker": "pnpm --filter @librering/worker typecheck",
+    "docs:serve": "mkdocs serve",
+    "docs:build": "mkdocs build --strict"
   },
   "engines": {
     "node": ">=20"
