@@ -8,7 +8,11 @@
     "dev:worker": "pnpm --filter @librering/worker dev",
     "lint:web": "pnpm --filter @librering/web lint",
     "typecheck": "pnpm -r typecheck",
-    "build:core": "cargo test --manifest-path core/librering-core/Cargo.toml"
+    "build:core": "cargo test --manifest-path core/librering-core/Cargo.toml",
+    "check:cloud": "node scripts/check-cloud-env.mjs",
+    "wire:env": "node scripts/wire-env.mjs",
+    "test:supabase": "node scripts/test-supabase.mjs",
+    "typecheck:worker": "pnpm --filter @librering/worker typecheck"
   },
   "engines": {
     "node": ">=20"

@@ -310,6 +310,45 @@ final class LocalStore: @unchecked Sendable {
         }
     }
 
+    // MARK: - Cloud sync snapshots
+
+    /// Rows formatted for Supabase `push_sync_batch` RPC.
+    func syncBatches(limitPerTable: Int = 500) -> [(table: String, records: [[String: Any]])] {
+        let db = self.db
+        return queue.sync {
+            func queryDoubles(_ sql: String, columns: [String]) -> [[String: Any]] {
+                var stmt: OpaquePointer?
+                guard sqlite3_prepare_v2(db.ptr, sql, -1, &stmt, nil) == SQLITE_OK else { return [] }
+                sqlite3_bind_int(stmt, 1, Int32(limitPerTable))
+                var rows: [[String: Any]] = []
+                while sqlite3_step(stmt) == SQLITE_ROW {
+                    var row: [String: Any] = [:]
+                    for (i, col) in columns.enumerated() {
+                        row[col] = sqlite3_column_double(stmt, Int32(i))
+                    }
+                    rows.append(row)
+                }
+                sqlite3_finalize(stmt)
+                return rows
+            }
+
+            return [
+                ("heart_rate", queryDoubles(
+                    "SELECT timestamp, bpm, ibi_ms FROM heart_rate ORDER BY timestamp DESC LIMIT ?",
+                    columns: ["timestamp", "bpm", "ibi_ms"]
+                )),
+                ("spo2", queryDoubles(
+                    "SELECT timestamp, percent FROM spo2 ORDER BY timestamp DESC LIMIT ?",
+                    columns: ["timestamp", "percent"]
+                )),
+                ("steps", queryDoubles(
+                    "SELECT timestamp, count FROM steps ORDER BY timestamp DESC LIMIT ?",
+                    columns: ["timestamp", "count"]
+                )),
+            ]
+        }
+    }
+
     // MARK: - Export
 
     func exportJSON(from startDate: Date, to endDate: Date) -> Data? {

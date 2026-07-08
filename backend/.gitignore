@@ -4,10 +4,12 @@
 .env.*
 !.env.example
 
-# Cloudflare Worker local dev
-.wrangler/
+# Local Worker dev secrets (gitignored)
 .dev.vars
 .dev.vars.*
+
+# Cloudflare Worker local dev
+.wrangler/
 
 # Supabase CLI local state
 .supabase/

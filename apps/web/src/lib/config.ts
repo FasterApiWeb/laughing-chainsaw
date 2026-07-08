@@ -16,3 +16,8 @@ export function getLibreRingConfig(): LibreRingConfig | null {
 export function isCloudEnabled(): boolean {
   return getLibreRingConfig() !== null;
 }
+
+export function isWorkerEnabled(): boolean {
+  const config = getLibreRingConfig();
+  return Boolean(config?.workerUrl);
+}

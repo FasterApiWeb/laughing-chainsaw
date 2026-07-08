@@ -6,15 +6,18 @@ import { AuthGuard } from "@/components/AuthGuard";
 import NavSidebar from "@/components/NavSidebar";
 import { useAuth } from "@/components/AuthProvider";
 import { deleteAccount } from "@/lib/auth";
-import { pushLocalToCloud } from "@/lib/sync";
+import { isWorkerEnabled } from "@/lib/config";
+import { syncWithCloud, uploadExportToCloud } from "@/lib/sync";
 import { exportAllData, clearAllData, getTotalRecordCount, getImportHistory } from "@/lib/queries";
 import type { ImportRecord } from "@/lib/db";
 
 function SettingsContent() {
   const { email, cloudEnabled, logout } = useAuth();
+  const workerEnabled = isWorkerEnabled();
   const [recordCount, setRecordCount] = useState(0);
   const [imports, setImports] = useState<ImportRecord[]>([]);
   const [syncStatus, setSyncStatus] = useState<string | null>(null);
+  const [backupStatus, setBackupStatus] = useState<string | null>(null);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
@@ -34,6 +37,16 @@ function SettingsContent() {
     URL.revokeObjectURL(url);
   };
 
+  const handleCloudBackup = async () => {
+    setBackupStatus("Uploading...");
+    const json = await exportAllData();
+    const filename = `librering-export-${new Date().toISOString().slice(0, 10)}.json`;
+    const result = await uploadExportToCloud(json, filename);
+    setBackupStatus(
+      result.ok ? `Backed up to R2 (${result.objectKey})` : (result.error ?? "Backup failed")
+    );
+  };
+
   const handleClear = async () => {
     await clearAllData();
     setRecordCount(0);
@@ -50,8 +63,26 @@ function SettingsContent() {
 
   const handleCloudSync = async () => {
     setSyncStatus("Syncing...");
-    const result = await pushLocalToCloud();
-    setSyncStatus(result.ok ? "Synced to cloud" : (result.error ?? "Sync failed"));
+    const result = await syncWithCloud();
+    if (result.ok) {
+      const inserted = result.inserted ?? 0;
+      const skipped = result.skipped ?? 0;
+      const pulled = result.pulled ?? 0;
+
+      if (inserted === 0 && skipped === 0 && pulled === 0) {
+        setSyncStatus("Already up to date — no new changes");
+      } else {
+        const parts = [
+          inserted ? `↑ ${inserted} new` : null,
+          skipped ? `${skipped} unchanged` : null,
+          pulled ? `↓ ${pulled} pulled` : null,
+        ].filter(Boolean);
+        setSyncStatus(parts.join(", "));
+      }
+      getTotalRecordCount().then(setRecordCount);
+    } else {
+      setSyncStatus(result.error ?? "Sync failed");
+    }
   };
 
   return (
@@ -66,6 +97,10 @@ function SettingsContent() {
             <div className="text-sm text-foreground/60 space-y-1">
               <p>Email: {email}</p>
               <p>Total records: {recordCount.toLocaleString()}</p>
+              <p>Cloud: {cloudEnabled ? "Supabase connected" : "Local only"}</p>
+              {cloudEnabled && (
+                <p>Blob storage: {workerEnabled ? "R2 connected" : "Not configured"}</p>
+              )}
             </div>
           </section>
 
@@ -74,28 +109,41 @@ function SettingsContent() {
             {cloudEnabled ? (
               <>
                 <p className="text-xs text-foreground/40 mb-3">
-                  Push local IndexedDB data to Supabase. Blobs (large exports) use Cloudflare R2.
+                  Two-way sync with Supabase. Imports auto-sync when cloud is enabled.
                 </p>
-                <button
-                  onClick={handleCloudSync}
-                  disabled={recordCount === 0}
-                  className="px-4 py-2 rounded-lg bg-foreground/10 text-sm font-medium hover:bg-foreground/15 transition-colors disabled:opacity-30"
-                >
-                  Sync Now
-                </button>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={handleCloudSync}
+                    disabled={recordCount === 0}
+                    className="px-4 py-2 rounded-lg bg-foreground/10 text-sm font-medium hover:bg-foreground/15 transition-colors disabled:opacity-30"
+                  >
+                    Sync Now
+                  </button>
+                  {workerEnabled && (
+                    <button
+                      onClick={handleCloudBackup}
+                      disabled={recordCount === 0}
+                      className="px-4 py-2 rounded-lg bg-foreground/10 text-sm font-medium hover:bg-foreground/15 transition-colors disabled:opacity-30"
+                    >
+                      Backup to R2
+                    </button>
+                  )}
+                </div>
                 {syncStatus && <p className="text-xs text-foreground/50 mt-2">{syncStatus}</p>}
+                {backupStatus && <p className="text-xs text-foreground/50 mt-1">{backupStatus}</p>}
               </>
             ) : (
               <p className="text-xs text-foreground/40">
-                Cloud sync is disabled. Copy <code className="text-foreground/60">apps/web/.env.example</code> to{" "}
+                Copy <code className="text-foreground/60">apps/web/.env.example</code> to{" "}
                 <code className="text-foreground/60">.env.local</code> and set Supabase keys.
+                See <code className="text-foreground/60">docs/SETUP_CLOUD.md</code>.
               </p>
             )}
           </section>
 
           <section className="rounded-xl border border-foreground/10 bg-foreground/[0.02] p-5">
             <h3 className="text-sm font-medium mb-3">Data Export</h3>
-            <p className="text-xs text-foreground/40 mb-3">Download all your health data as a JSON file. This file is compatible with LibreRing Desktop for re-import.</p>
+            <p className="text-xs text-foreground/40 mb-3">Download all your health data as a JSON file. This file is compatible with LibreRing iOS for re-import.</p>
             <button
               onClick={handleExport}
               disabled={recordCount === 0}

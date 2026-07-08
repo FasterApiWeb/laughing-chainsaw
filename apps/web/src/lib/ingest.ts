@@ -151,5 +151,9 @@ export async function ingestLibreRingJSON(content: string, filename: string): Pr
     hash,
   });
 
+  // Auto-sync to cloud when configured (non-blocking)
+  const { syncAfterImport } = await import("./sync");
+  syncAfterImport();
+
   return { inserted, skipped, source: "librering" };
 }

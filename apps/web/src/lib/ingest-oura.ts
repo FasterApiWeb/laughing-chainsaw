@@ -162,5 +162,16 @@ export async function ingestOuraZip(file: File): Promise<IngestResult> {
     hash,
   });
 
+  await db.imports.add({
+    filename: file.name,
+    source: "oura",
+    importedAt: new Date().toISOString(),
+    recordCount: inserted,
+    hash,
+  });
+
+  const { syncAfterImport } = await import("./sync");
+  syncAfterImport();
+
   return { inserted, skipped, source: "oura" };
 }

@@ -19,6 +19,13 @@ export default function LoginPage() {
     const result = await login(email, password);
     setLoading(false);
     if (result.ok) {
+      if (typeof window !== "undefined") {
+        const { isCloudEnabled } = await import("@/lib/config");
+        if (isCloudEnabled()) {
+          const { syncWithCloud } = await import("@/lib/sync");
+          void syncWithCloud();
+        }
+      }
       router.replace("/dashboard");
     } else {
       setError(result.error ?? "Login failed.");

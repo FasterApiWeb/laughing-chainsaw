@@ -31,30 +31,57 @@ Step-by-step guide to connect Supabase + Cloudflare Worker to the web app and iO
 
 Verify in **Table Editor**: you should see `profiles`, `devices`, `heart_rate`, etc.
 
-### Step 4: Enable email auth
+### Step 4: Configure Authentication (important)
 
-1. **Authentication** → **Providers** → **Email** → enabled (default)
-2. **Authentication** → **Settings**:
-   - For testing: disable **Confirm email** (optional, speeds up signup)
-   - Set **Site URL** to `http://localhost:3000` for local dev
-   - Add redirect URL: `http://localhost:3000/**`
+LibreRing uses **email + password** in the browser ([Supabase password auth](https://supabase.com/docs/guides/auth/passwords)). You only need two dashboard pages.
+
+#### A) Email provider — allow instant signup (recommended for dev)
+
+1. Dashboard → **Authentication** → **Sign In / Providers** (or **Providers**)
+2. Click **Email**
+3. Ensure **Enable Email provider** is ON
+4. Turn **OFF** → **Confirm email**
+
+Why? On hosted Supabase, [email confirmation is ON by default](https://supabase.com/docs/guides/auth/passwords). If it stays on, signup sends a confirmation email and you **cannot log in** until you click the link. Default SMTP also limits you to ~2 emails/hour.
+
+With Confirm email off, [Supabase treats the email as verified immediately](https://supabase.com/docs/guides/auth/general-configuration) — perfect for local testing.
+
+#### B) URL Configuration — where auth redirects go
+
+1. Dashboard → **Authentication** → **URL Configuration**
+2. Set **Site URL** to:
+   ```
+   http://localhost:3000
+   ```
+3. Under **Redirect URLs**, click **Add URL** and add:
+   ```
+   http://localhost:3000/**
+   ```
+
+Docs: [Redirect URLs](https://supabase.com/docs/guides/auth/redirect-urls). Site URL is the default redirect when none is specified (email links, password reset). The wildcard entry allows local dev.
+
+> **GitHub Pages later:** change Site URL to `https://fasterapiweb.github.io/laughing-chainsaw/` and add that URL + `/**` to Redirect URLs.
+
+You do **not** need custom SMTP, OAuth providers, or MFA for basic testing.
 
 ### Step 5: Wire the web app
 
+If you already filled `backend/supabase/.env`:
+
 ```bash
-cp apps/web/.env.example apps/web/.env.local
+pnpm wire:env    # copies keys → apps/web/.env.local
 ```
 
-Edit `apps/web/.env.local`:
+Or manually:
 
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://YOUR_REF.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOi...
-NEXT_PUBLIC_WORKER_URL=          # leave empty until Part 2
+```bash
+cp apps/web/.env.example apps/web/.env.local
+# paste SUPABASE_URL and anon key
 ```
 
 ```bash
 pnpm install
+pnpm test:supabase   # should pass
 pnpm dev:web
 ```
 
@@ -193,8 +220,10 @@ https://fasterapiweb.github.io/laughing-chainsaw/
 |---------|-----|
 | Signup returns error | Check anon key; disable email confirm for testing |
 | Sync Now fails "not authenticated" | Sign out and back in; check `.env.local` |
-| Sync fails "device not found" | Clear `localStorage` key `librering_device_id`, sync again |
-| RLS blocks insert | Ensure you're logged in; RPC uses `auth.uid()` |
+| Sync fails "FOREACH expression must not be null" | Run `004_fix_null_foreach.sql` in SQL Editor |
+| Sync fails "row-level security" on devices | Run `003_devices_rls_fix.sql` in SQL Editor |
+| Sync fails "device not found" | DevTools → Application → Local Storage → delete `librering_device_id`, sync again |
+| RLS blocks insert | Ensure you're logged in; run migration 003 |
 | iOS build fails on Secrets | Ensure `apps/ios/LibreRing/Secrets.xcconfig` exists (committed empty default) |
 | Worker 401 | JWT secret mismatch; token expired — re-login |
 

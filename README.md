@@ -105,6 +105,12 @@ Read [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) before opening a PR.
 - [ ] Rust core UniFFI bindings on iOS/Android
 - [ ] PyPI package for protocol library
 
+## Deploy (GitHub Pages)
+
+See [docs/DEPLOY.md](docs/DEPLOY.md) for one-time GitHub + Supabase URL setup, then push to `main`.
+
+Production: https://fasterapiweb.github.io/laughing-chainsaw/
+
 ## Personal data (gitignored)
 
 Never commit ring auth keys, GATT dumps, or health captures:

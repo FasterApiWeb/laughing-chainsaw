@@ -33,11 +33,15 @@ export class SupabaseSyncService implements SyncService {
   }
 
   async pull(request: SyncPullRequest): Promise<SyncPullResponse> {
-    const { data, error } = await this.client.rpc("pull_sync_delta", {
+    const params: Record<string, unknown> = {
       p_device_id: request.deviceId,
       p_since_cursor: request.sinceCursor,
-      p_tables: request.tables ?? null,
-    });
+    };
+    if (request.tables?.length) {
+      params.p_tables = request.tables;
+    }
+
+    const { data, error } = await this.client.rpc("pull_sync_delta", params);
 
     if (error) throw new Error(error.message);
 
